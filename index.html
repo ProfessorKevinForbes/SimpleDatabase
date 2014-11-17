@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Capture Photo</title>
+    <title>Simple Database</title>
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1"/>
     <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
     <script type="text/javascript" charset="utf-8">
 
         document.addEventListener("deviceready", onDeviceReady, false);
-
-    // device APIs are available
-    //
-    function onDeviceReady() {
-        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
-        db.transaction(populateDB, errorCB, successCB);
-    }
 
     // Populate the database
     //
@@ -24,16 +17,43 @@
         tx.executeSql('INSERT INTO DEMO (id, data) VALUES (2, "Second row")');
     }
 
+    // Query the database
+    //
+    function queryDB(tx) {
+        tx.executeSql('SELECT * FROM DEMO', [], querySuccess, errorCB);
+    }
+
+    // Query the success callback
+    //
+    function querySuccess(tx, results) {
+	var p = document.getElementById("output");
+        p.innerHTML = "Returned rows = " + results.rows.length + "<br>";
+
+        var len = results.rows.length;
+        for (var i=0; i<len; i++){
+            p.innerHTML = p.innerHTML + "Row = " + i + " ID = " + results.rows.item(i).id + " Data =  " + results.rows.item(i).data + "<br>";
+        }
+
+    }
+
     // Transaction error callback
     //
-    function errorCB(tx, err) {
-        alert("Error processing SQL: "+err);
+    function errorCB(err) {
+        console.log("Error processing SQL: "+err.code);
     }
 
     // Transaction success callback
     //
     function successCB() {
-        alert("success!");
+        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+        db.transaction(queryDB, errorCB);
+    }
+
+    // device APIs are available
+    //
+    function onDeviceReady() {
+        var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
+        db.transaction(populateDB, errorCB, successCB);
     }
 
 
@@ -43,5 +63,6 @@
   <body>
     <h1>Example</h1>
     <p>Database</p>
+    <p id="output"></p>
   </body>
 </html>
