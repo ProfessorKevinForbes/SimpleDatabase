@@ -2,16 +2,16 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
 	xmlns:android   = "http://schemas.android.com/apk/res/android"
-        id          = "edu.iupui.n300.LocalStorage"
+        id          = "edu.iupui.n300.SimpleDatabase"
         version     = "1.0.0" >
 
-    <name>Local Storage</name>
+    <name>Simple Database</name>
 
     <description>
-        A simple Local Storagetool.
+        A simple Database app.
     </description>
 
-    <author href="https://github.com/ProfessorKevinForbes/LocalStorage" email="professorkevinforbes@gmail.com">
+    <author href="https://github.com/ProfessorKevinForbes/SimpleDatabase" email="professorkevinforbes@gmail.com">
         Kevin Forbes
     </author>
 
